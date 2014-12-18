@@ -120,8 +120,10 @@ def download(url, download_path, silent=True):
 	return skipper.dl_tracks(track_urls)
 
 if __name__ == "__main__":
-	link = sys.argv[1]
-	list_of_downloaded_filenames = download(link, '/Users/joeengelman/Music/Soundcloud/', False)
+	list_of_downloaded_filenames = []
+	for i in range(1, len(sys.argv)):
+		link = sys.argv[i]
+		list_of_downloaded_filenames += download(link, '/Users/joeengelman/Music/Soundcloud/', silent=False)
 	print
 	print "The following files were downloaded successfully:"
 	for filename in list_of_downloaded_filenames:
