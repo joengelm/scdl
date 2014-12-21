@@ -20,3 +20,12 @@ Example
     dest = './Soundcloud/'
     download(url, dest, silent=False) # The silent argument is optional and, if true, disables progress output
     # That's it! You've just downloaded a song from Soundcloud.
+
+Scrawl
+------
+Scrawl is an example program that uses SCDL to crawl Soundcloud and download recommended tracks using a breadth-first search.
+
+TODO
+----
+- Speed up Scrawl
+- Implement a timer that measures time spent processing pages/files and time spent interacting with the Soundcloud API
