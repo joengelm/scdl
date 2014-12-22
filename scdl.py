@@ -12,7 +12,7 @@ import sys
 from mutagen.mp3 import MP3
 from mutagen.id3 import ID3, APIC, error
  
-CLIENT_ID = # PUT YOUR CLIENT ID HERE!!!
+CLIENT_ID = '49009eb8904b11a2a5d2c6bdc162dd32'
 MEDIA_STREAM_URL = 'http://media.soundcloud.com/stream/'
 
 # color codes for terminal output
