@@ -28,7 +28,7 @@ Note: scdl.py can handle an arbitrary number of arguments, and it will download 
 
 Scrawl
 ------
-Scrawl is an example program that uses SCDL to crawl Soundcloud and download recommended tracks using a breadth-first search.
+Scrawl is an example program that uses SCDL to crawl Soundcloud and download recommended tracks using a breadth-first search. You can learn more by viewing the comments in scrawl.py.
 
 Troubleshooting
 ---------------
