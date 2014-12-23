@@ -37,10 +37,6 @@ Scrawl
 ------
 Scrawl is an example program that uses SCDL to crawl Soundcloud and download recommended tracks using a breadth-first search. You can learn more by viewing the comments in scrawl.py.
 
-Troubleshooting
----------------
-**Remember to put your *own* client ID into scdl.py.** You can acquire a client ID easily by going to [Soundcloud's app registration page](http://soundcloud.com/you/apps/new).
-
 TODO
 ----
 - Speed up Scrawl
