@@ -30,7 +30,7 @@ class scdl:
 	def __init__(self, url, download_path, silent=True):
 		self.url = url
 		self.download_progress = 0
-		self.download_path = download_path
+		self.download_path = os.path.expanduser(download_path)
 		self.current_time = time.time()
 		self.track_url_dicts = self.resolve(url)
 		self.silent = silent
@@ -126,13 +126,14 @@ def embed_artwork(track_filename, artwork_filename):
 	audio.save()
 
 # easy download method to download a track specified by 'url' to a folder 'download_path'
+# returns a tuple of the common download path and a list of full filenames
 def download(url, download_path, silent=True):
 	skipper = scdl(url, download_path, silent)
 	track_urls = skipper.track_url_dicts
 	return skipper.dl_tracks(track_urls)
 
 if __name__ == "__main__":
-	dest = './Soundcloud/'
+	dest = os.path.expanduser('~/Music/Soundcloud/')
 	list_of_downloaded_filenames = []
 	for i in range(1, len(sys.argv)):
 		link = sys.argv[i]

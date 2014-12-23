@@ -2,8 +2,9 @@ from scdl import download
 from scdl import colors
 from bs4 import BeautifulSoup
 import urllib
+import os
 
-DOWNLOAD_PATH = './Soundcloud/Crawler/'		# choose where to download tracks
+DOWNLOAD_PATH = os.path.expanduser('~/Music/Soundcloud/Crawler/')	# choose where to download tracks
 
 future_urls = []			# a queue for URLs to visit in the future
 visited_urls = []			# a list of URLs already visited
