@@ -48,6 +48,11 @@ class scdl:
 			# resolve_url is a list of song objects
 			for track in resolved_url.tracks:
 				returnMedia.append(self.get_track_detail(track['id']))
+		elif resolved_url.kind == 'user':
+			track_list_url = 'https://api.soundcloud.com/users/' + str(resolved_url.id) + '/tracks'
+			tracks = self.client.get(track_list_url)
+			for track in tracks:
+				returnMedia.append(self.get_track_detail(track.id))
 		return returnMedia
  
  	# return a dict of important attributes for a specific track
@@ -56,6 +61,7 @@ class scdl:
 		track = self.client.get('/tracks/' + str(track_id))
 		track_detail = {'title':track.title,
 						# keep a version of the title that can be used as a filename
+						'artist':re.sub('[\/:*?"<>|%]', '-', track.user['username']),
 						'safe_title':re.sub('[\/:*?"<>|%]', '-', track.title),
 						# find the streaming URL for this track
 					 	'stream_url':MEDIA_STREAM_URL + str(regex.search(track.waveform_url).groups()[0]),
@@ -67,12 +73,14 @@ class scdl:
 	# return a list of filenames where the tracks were downloaded to
 	def dl_tracks(self, tracks):
 		track_filename_list = []
-		if not os.path.isdir(self.download_path):
-			os.mkdir(self.download_path)
 		for track in tracks:
 			try:
-				track_filename = self.download_path + "{0}.mp3".format(track['safe_title'])
-				artwork_filename = self.download_path + ".{0}-artwork.jpg".format(track['safe_title'])
+				# create a folder to store this artist's tracks
+				artist_folder = self.download_path + track['artist'] + '/'
+				if not os.path.isdir(artist_folder):
+					os.mkdir(artist_folder)
+				track_filename = artist_folder + "{0}.mp3".format(track['safe_title'])
+				artwork_filename = artist_folder + ".{0}-artwork.jpg".format(track['safe_title'])
 				if not self.silent: 
 					sys.stdout.write(colors.HEADER + "Downloading: " + colors.END + colors.OKBLUE + "{0}".format(track['title']) + colors.END + "\n")
 				urllib.urlretrieve(url=track['stream_url'], filename=track_filename, reporthook=(None if self.silent else self.dl_progress))
@@ -126,7 +134,7 @@ def embed_artwork(track_filename, artwork_filename):
 	audio.save()
 
 # easy download method to download a track specified by 'url' to a folder 'download_path'
-# returns a tuple of the common download path and a list of full filenames
+# returns a list of full filenames and paths of downloaded tracks
 def download(url, download_path, silent=True):
 	skipper = scdl(url, download_path, silent)
 	track_urls = skipper.track_url_dicts
@@ -141,6 +149,6 @@ if __name__ == "__main__":
 	print
 	print colors.HEADER + "The following files were downloaded successfully:" + colors.END
 	for i, filename in enumerate(list_of_downloaded_filenames):
-		print "\t" + colors.HEADER + str(i+1) + ". " + colors.END + colors.OKBLUE + " {0}".format(filename[len(dest):]) + colors.END
+		print "\t" + colors.HEADER + str(i+1) + ". " + colors.END + colors.OKBLUE + " {0}".format(filename[len(dest):].split('/')[1]) + colors.END
 	print colors.OKGREEN + "Finished." + colors.END
 
