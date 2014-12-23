@@ -3,11 +3,16 @@ SCDL: a simple, powerful Soundcloud downloader
 
 What?
 -----
-SCDL is a basic library for downloading tracks and playlists from Soundcloud. With one call to 'scdl.download', you can easily save a track or playlist to your computer. SCDL also provides informative output about a song's download progress and embeds each track's artwork into its mp3 file.
+SCDL is a basic library for downloading tracks and playlists from Soundcloud. With one call to 'scdl.download', you can easily save a track or playlist to your computer. SCDL also provides informative output about a song's download progress and embeds each track's artwork into its mp3 file. By default, SCDL will download tracks into the user's '~/Music/Soundcloud/*artist*/' folder, where *artist* is the owner of the track (not *necessarily* the actual artist of the song).
 
 How?
 ----
-SCDL uses the [Soundcloud API Python wrapper](https://github.com/soundcloud/soundcloud-python) and [Mutagen libraries](https://mutagen.readthedocs.org/en/latest/). **Be sure to put your *own* client ID into scdl.py.** You can acquire a client ID easily by going to [Soundcloud's app registration page](http://soundcloud.com/you/apps/new).
+SCDL uses the [Soundcloud API Python wrapper](https://github.com/soundcloud/soundcloud-python) and [Mutagen libraries](https://mutagen.readthedocs.org/en/latest/). You can install these packages with:
+    
+    pip install soundcloud
+    pip install mutagen
+
+Or, if you're not hip about pip, use whatever package manager you want.
 
 Why?
 ----
@@ -22,7 +27,9 @@ Example
     # That's it! You've just downloaded a song from Soundcloud.
 You can also use scdl.py with command line arguments:
     
+    python scdl.py 'https://soundcloud.com/joeengelman'
     python scdl.py 'https://soundcloud.com/joeengelman/lion-king-for-drum-corps'
+    python scdl.py 'https://soundcloud.com/joeengelman/sets/winter-2015'
     
 Note: scdl.py can handle an arbitrary number of arguments, and it will download each one in turn.
 
