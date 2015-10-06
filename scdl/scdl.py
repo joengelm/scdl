@@ -79,10 +79,10 @@ class scdl:
 				artist_folder = self.download_path + track['artist'] + '/'
 				if not os.path.isdir(artist_folder):
 					os.mkdir(artist_folder)
-				track_filename = artist_folder + "{0}.mp3".format(track['safe_title'])
-				artwork_filename = artist_folder + ".{0}-artwork.jpg".format(track['safe_title'])
+				track_filename = unicode(artist_folder) + u"{0}.mp3".format(track['safe_title'])
+				artwork_filename = unicode(artist_folder) + u".{0}-artwork.jpg".format(track['safe_title'])
 				if not self.silent: 
-					sys.stdout.write(colors.HEADER + "Downloading: " + colors.END + colors.OKBLUE + "{0}".format(track['title']) + colors.END + "\n")
+					sys.stdout.write(unicode(colors.HEADER + "Downloading: " + colors.END + colors.OKBLUE) + u"{0}".format(track['title']) + unicode(colors.END + "\n"))
 				urllib.urlretrieve(url=track['stream_url'], filename=track_filename, reporthook=(None if self.silent else self.dl_progress))
 				# reset variables so next track's report hook doesn't malfunction
 				self.download_progress = 0
@@ -94,8 +94,9 @@ class scdl:
 				embed_artwork(track_filename, artwork_filename)
 				os.remove(artwork_filename)
 				track_filename_list.append(track_filename)
-			except:
+			except e:
 				# in case of failure, just move on to next track
+				print e
 				continue
 		return track_filename_list
 
@@ -149,6 +150,5 @@ if __name__ == "__main__":
 	print
 	print colors.HEADER + "The following files were downloaded successfully:" + colors.END
 	for i, filename in enumerate(list_of_downloaded_filenames):
-		print "\t" + colors.HEADER + str(i+1) + ". " + colors.END + colors.OKBLUE + " {0}".format(filename[len(dest):].split('/')[1]) + colors.END
+		print unicode("\t" + colors.HEADER + str(i+1) + ". " + colors.END + colors.OKBLUE) + u" {0}".format(filename[len(dest):].split('/')[1]) + unicode(colors.END)
 	print colors.OKGREEN + "Finished." + colors.END
-
